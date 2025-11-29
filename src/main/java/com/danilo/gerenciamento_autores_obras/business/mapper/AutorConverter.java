@@ -11,7 +11,7 @@ import java.util.List;
 public interface AutorConverter {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "obrasId", ignore = true)
+    @Mapping(target = "obrasIds", ignore = true)
     AutorModel paraAutorModel(AutorDTO dto);
 
     AutorDTO paraAutorDTO(AutorModel model);

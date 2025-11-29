@@ -26,18 +26,18 @@ public class ObraService {
         ObraModel model = obraConverter.paraObraModel(dto);
         ObraModel salva = obraRepository.save(model);
 
-        atualizarObrasDosAutores(salva.getAutoresId(), salva.getId(), true);
+        atualizarObrasDosAutores(salva.getAutoresIds(), salva.getId(), true);
 
         return obraConverter.paraObraDTO(salva);
     }
 
     public void validarAutores(List<String> autoresId){
         if (autoresId == null || autoresId.isEmpty()){
-            throw new BusinessException("A obra deve possuir ao menos um ator");
+            throw new BusinessException("A obra deve possuir ao menos um autor");
         }
         for (String id : autoresId){
             if (!autorRepository.existsById(id)){
-                throw new BusinessException("Autor inválido " + id);
+                throw new BusinessException("Autor inválido" + id);
             }
         }
     }
@@ -47,11 +47,11 @@ public class ObraService {
             AutorModel autor = autorRepository.findById(autorId).orElseThrow(
                     () -> new BusinessException("Autor não encontrado " + autorId));
             if (adicionar){
-                if (!autor.getObrasId().contains(obraId)){
-                    autor.getObrasId().add(obraId);
+                if (!autor.getObrasIds().contains(obraId)){
+                    autor.getObrasIds().add(obraId);
                 }
             } else {
-                autor.getObrasId().remove(obraId);
+                autor.getObrasIds().remove(obraId);
             }
             autorRepository.save(autor);
         });
@@ -62,17 +62,17 @@ public class ObraService {
                 () -> new BusinessException("Obra não encontrada"));
         validarAutores(dto.getAutoresId());
 
-        atualizarObrasDosAutores(obraExistente.getAutoresId(), obraExistente.getId(), false);
+        atualizarObrasDosAutores(obraExistente.getAutoresIds(), obraExistente.getId(), false);
 
         obraExistente.setNome(dto.getNome());
         obraExistente.setDescricao(dto.getDescricao());
-        obraExistente.setAutoresId(dto.getAutoresId());
+        obraExistente.setAutoresIds(dto.getAutoresId());
         obraExistente.setDataExposicao(dto.getDataExposicao());
         obraExistente.setDataPublicacao(dto.getDataPublicacao());
 
         ObraModel salva = obraRepository.save(obraExistente);
 
-        atualizarObrasDosAutores(salva.getAutoresId(), salva.getId(), true);
+        atualizarObrasDosAutores(salva.getAutoresIds(), salva.getId(), true);
         return obraConverter.paraObraDTO(salva);
     }
 
@@ -90,8 +90,7 @@ public class ObraService {
         ObraModel obra = obraRepository.findById(id).orElseThrow(
                 () -> new BusinessException("Obra não encontrada"));
 
-        atualizarObrasDosAutores(obra.getAutoresId(), obra.getId(), false);
+        atualizarObrasDosAutores(obra.getAutoresIds(), obra.getId(), false);
         obraRepository.delete(obra);
     }
-
 }

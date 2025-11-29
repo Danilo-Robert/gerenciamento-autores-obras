@@ -27,5 +27,5 @@ public class AutorModel {
     private LocalDate dataNascimento;
     private String paisOrigem;
     private String cpf;
-    private List<String> obrasId = new ArrayList<>();
+    private List<String> obrasIds = new ArrayList<>();
 }

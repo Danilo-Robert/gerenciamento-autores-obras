@@ -1,6 +1,8 @@
 package com.danilo.gerenciamento_autores_obras.controller;
 
 import com.danilo.gerenciamento_autores_obras.infrastructure.exceptions.BusinessException;
+import com.danilo.gerenciamento_autores_obras.infrastructure.exceptions.ConflictException;
+import com.danilo.gerenciamento_autores_obras.infrastructure.exceptions.UnauthorizedException;
 import com.danilo.gerenciamento_autores_obras.infrastructure.exceptions.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,26 @@ public class GlobalHandlerException {
                 ex.getMessage(),
                 request.getRequestURI(),
                 "Bad Request"
+        ));
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorResponse> handleConflictException(ConflictException ex,
+                                                                    HttpServletRequest request){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(buildError(HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                "Conflict"
+        ));
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex,
+                                                                        HttpServletRequest request){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(buildError(HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                "Unauthorized"
         ));
     }
 
