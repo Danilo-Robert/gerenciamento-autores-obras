@@ -21,18 +21,10 @@ public class ObraModel {
 
     @Id
     private String id;
-
-    @NotBlank
     private String nome;
-
-    @Size(max = 240)
     private String descricao;
-
-
     private LocalDate dataPublicacao;
-
     private LocalDate dataExposicao;
-
     private List<String> autoresId = new ArrayList<>();
 
 }
