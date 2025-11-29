@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AutorRepository extends MongoRepository<AutorModel, String> {
+        boolean existsByEmail(String email);
+        boolean existsByCpf(String cpf);
 }
