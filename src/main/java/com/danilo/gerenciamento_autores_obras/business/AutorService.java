@@ -68,11 +68,11 @@ public class AutorService {
         AutorModel autor = autorRepository.findById(id).orElseThrow(
                 () -> new BusinessException("Autor não encontrado"));
 
-        if (!autor.getObrasId().isEmpty()){
-            autor.getObrasId().forEach(obraId -> {
+        if (!autor.getObrasIds().isEmpty()){
+            autor.getObrasIds().forEach(obraId -> {
                 ObraModel obra = obraRepository.findById(obraId).orElseThrow(
                         () -> new BusinessException("Obra não encontrada ao remover autor"));
-            obra.getAutoresId().remove(autor.getId());
+            obra.getAutoresIds().remove(autor.getId());
             obraRepository.save(obra);
             });
         }

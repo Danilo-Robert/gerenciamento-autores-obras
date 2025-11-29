@@ -25,6 +25,6 @@ public class ObraModel {
     private String descricao;
     private LocalDate dataPublicacao;
     private LocalDate dataExposicao;
-    private List<String> autoresId = new ArrayList<>();
+    private List<String> autoresIds = new ArrayList<>();
 
 }
